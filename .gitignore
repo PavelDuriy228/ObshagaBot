@@ -1,0 +1,5 @@
+.env
+download/
+__pycache__/
+Rasx/
+bali.db/
