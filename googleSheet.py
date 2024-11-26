@@ -31,19 +31,19 @@ async def creat_user(name_sheet, name, u_code_strsti, comment, all_count):
          condition_value=str(name_sheet)
     )
     
-    # print(f"tg_id {tg_user_id_strst}")
+    if not( tg_user_id_strst is None):
 
-    url = await full_add_student(
-         full_name= name,
-         unic_code= int(u_code_strsti),                    
-    )
+        url = await full_add_student(
+            full_name= name,
+            unic_code= int(u_code_strsti),                    
+        )                       
+        await bot.send_message(tg_user_id_strst, "Этого человека не было в БД")
+        await bot.send_message(tg_user_id_strst, url)
     await setter_bals_coms(
         name=name,
         comment=comment,
         all_count=all_count
-    )           
-    await bot.send_message(tg_user_id_strst, "Этого человека не было в БД")
-    await bot.send_message(tg_user_id_strst, url)
+    )
 
 async def reader ():
     print ("----- Функция reader была вызвана ----")

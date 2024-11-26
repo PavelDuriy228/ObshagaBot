@@ -12,12 +12,12 @@ from adms import *
 from general import *  # Импортируем обработчики
 from config import dp
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from datetime import datetime
 from googleSheet import reader
 
 
 #-------- Общая часть ---------------------------------
 dp.message.register(handler_start, CommandStart())
+dp.message.register(handler_menu_strst, lambda message: message.text == "В меню")
 dp.message.register(father_handler,lambda message: message.text == "/father" )
 dp.message.register(handl_statistika, lambda message: message.text == "Статистика")
 
@@ -35,21 +35,21 @@ dp.message.register(handl_excel, lambda message: message.text == "Получит
 #------- Конец админской части -------------------------------        
 
 #---------- Часть для старосты ----------------------
-dp.message.register(edit_students_0, lambda message:message.text == "Изменить студентов" )
+#dp.message.register(edit_students_0, lambda message:message.text == "Изменить студентов" )
 dp.message.register(edit_students_1, edit_students.command)
 dp.message.register(edit_students_2, edit_students.name)
 dp.message.register(edit_students_3, edit_students.new_value)
-dp.message.register(edit_st_bals_W_file_0,lambda message: message.text == "Изменить баллы" )
+#dp.message.register(edit_st_bals_W_file_0,lambda message: message.text == "Изменить баллы" )
 dp.message.register(edit_st_bals_W_file_1, File_with_balls.file)
-dp.message.register(add_students_with_file_0, lambda message: message.text == "Добавить студентов файлом")
+#dp.message.register(add_students_with_file_0, lambda message: message.text == "Добавить студентов файлом")
 dp.message.register(add_students_with_file, FOR_Work_w_File.waiting_file )
-dp.message.register(add_students_with_file_0, lambda message: message.text == "Добавить студентов файлом")
+#dp.message.register(add_students_with_file_0, lambda message: message.text == "Добавить студентов файлом")
 dp.message.register(add_students_with_file, FOR_Work_w_File.waiting_file)
 dp.message.register(my_students, lambda message: message.text == "Мои студенты")
 dp.message.register(my_students_1,deistv_st.name_st )
 dp.message.register(add_students,lambda message: message.text == "Добавить студента" )
 dp.message.register(proc_create_new_user2, NewUser.text_cell )
-dp.message.register(handl_statistika, lambda message: message.text == "Статистика")                
+#dp.message.register(handl_statistika, lambda message: message.text == "Статистика")                
 #-------- Конец части для старосты -------------------------
 
 
@@ -59,7 +59,7 @@ async def main(message: types.Message = None):
         logging.basicConfig(level=logging.INFO)
         # Назначение выполнение функции чтения данных с таблицы
         scheduler = AsyncIOScheduler()
-        scheduler.add_job(reader, 'cron', hour=17, minute =2)
+        scheduler.add_job(reader, 'cron', hour=23, minute =30)
         scheduler.start()
         if scheduler:
             print ("---Задача назначена")

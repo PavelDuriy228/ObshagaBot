@@ -7,7 +7,7 @@ from gspread import Worksheet, service_account
 
 load_dotenv(find_dotenv())
 
-Bot_token= os.getenv('token_test')
+Bot_token= os.getenv('token_master')
 
 
 # Получение ссылки на google таблицу
@@ -25,7 +25,7 @@ storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
 
 user_id_adm = 1413674444
-username_bota = os.getenv('name_test')
+username_bota = os.getenv('name_master')
 
 current_dir= os.path.dirname(os.path.abspath(__file__))
 def get_db_connection():

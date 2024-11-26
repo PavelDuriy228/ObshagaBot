@@ -6,6 +6,7 @@ from markups import *
 from FSMS import *
 from aiogram.fsm.context import FSMContext  # Импортируйте FSMContext
 
+# Функция старта
 async def handler_start(message: types.Message, command: CommandStart,state:FSMContext):
     print ("хэндлер вызван")
     unic_code = command.args
@@ -43,6 +44,7 @@ async def handler_start(message: types.Message, command: CommandStart,state:FSMC
     if cur_user_id == user_id_adm:
         await message.answer("Здравствуйте, администратор", reply_markup=markup_for_menu_admn)
 
+# Функция меню старосты
 async def handler_menu_strst (message: types.Message, state: FSMContext):
     #await state.reset_state(with_data = True)
     await state.clear()
@@ -52,7 +54,7 @@ async def handler_menu_strst (message: types.Message, state: FSMContext):
         column_pol="tg_user_id"
     )
 
-    
+    # Проверка id, c вызовом клавиатуры
     if cur_id in list_strst:
         await message.answer ("Меню для старосты", reply_markup= markup_for_menu_strst)
     elif cur_id == user_id_adm:

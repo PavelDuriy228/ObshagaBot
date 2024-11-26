@@ -5,12 +5,12 @@ keyboard =[
     ]
 
 menu_keyboard_for_strst =[
-    [KeyboardButton(text="Добавить студента")],
-    [KeyboardButton(text="Изменить баллы")],
+#    [KeyboardButton(text="Добавить студента")],
+#    [KeyboardButton(text="Изменить баллы")],
     [KeyboardButton(text="Мои студенты")],
     [KeyboardButton(text="Статистика")],
-    [KeyboardButton(text="Добавить студентов файлом")],
-    [KeyboardButton(text="Изменить студентов")]
+#    [KeyboardButton(text="Добавить студентов файлом")],
+#    [KeyboardButton(text="Изменить студентов")]
 ]
 menu_keyboard_for_admin =[
     [KeyboardButton(text="Добавить старосту")],
