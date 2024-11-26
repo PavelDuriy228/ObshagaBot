@@ -3,10 +3,20 @@ from dotenv import load_dotenv, find_dotenv
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram import Dispatcher, Bot
 import sqlite3
+from gspread import Worksheet, service_account 
 
 load_dotenv(find_dotenv())
 
 Bot_token= os.getenv('token_test')
+
+
+# Получение ссылки на google таблицу
+sheet_url = os.getenv('google_table')
+# API бота гугл таблиц
+gc = service_account(filename="api_for_google_sheet.json")
+wks = gc.open("testTable")
+
+
 if Bot_token is None:
     raise ValueError("Токен бота не найден. Убедитесь, что переменная окружения 'token_test' установлена.")
 

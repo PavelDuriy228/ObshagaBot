@@ -9,8 +9,11 @@ from dotenv import load_dotenv, find_dotenv
 from Db import *
 from FSMS  import *
 from adms import *
-from general import handler_start, father_handler, handl_statistika  # Импортируем обработчики
+from general import *  # Импортируем обработчики
 from config import dp
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from datetime import datetime
+from googleSheet import reader
 
 
 #-------- Общая часть ---------------------------------
@@ -54,9 +57,16 @@ async def main(message: types.Message = None):
     try:
         # Благодаря этому в консоли появлятся вся информации о работе тг бота
         logging.basicConfig(level=logging.INFO)
+        # Назначение выполнение функции чтения данных с таблицы
+        scheduler = AsyncIOScheduler()
+        scheduler.add_job(reader, 'cron', hour=17, minute =2)
+        scheduler.start()
+        if scheduler:
+            print ("---Задача назначена")
 
         # Этим мы опрашиваем тг на наличие уведомлений
         await dp.start_polling(bot)
+        
     except Exception as e:
         # Получаем строку с информацией об ошибке
         error_message = traceback.format_exc()

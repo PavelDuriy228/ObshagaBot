@@ -46,6 +46,7 @@ async def setter_for_bd (
         print(error_message)
 
 # Созадние старосты
+# Не перенесена в ORM
 async def create_new_user(table:str, code:int, name:str, place:str):
     async with aiosqlite.connect(get_db_connection()) as db:
         async with db.cursor() as cursor:

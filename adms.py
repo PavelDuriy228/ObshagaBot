@@ -146,7 +146,7 @@ async def proc_create_new_strst_2 (message: types.Message, state: FSMContext):
         data = await state.get_data()
         name_place = data['name']
         splited = name_place.split(":")
-        place = splited[1]
+        place = splited[1].strip()
 
         code = await create_code(table="Starst", diap1=500_000, diap2=1_000_000)
         result = f"{name_place}"
