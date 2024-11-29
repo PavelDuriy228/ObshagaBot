@@ -1,6 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from aiogram import types
-from config import bot, current_dir, user_id_adm
+from config import bot, current_dir, user_id_adm, username_bota
 import pandas as pd
 from Db import *
 from config import dp
@@ -8,6 +9,28 @@ from FSMS import *
 from markups import *
 import os
 
+
+
+async def get_urls (message: types.Message):    
+    star_id = await get_specific_value(
+            table = "Starst", column="unic_kod", 
+            condition_column="tg_user_id", 
+            condition_value=message.from_user.id
+    )
+    list_students = await get_all_if(
+        table="Just_users",
+        column_poiska="unic_kod_strtsi",
+        column_pol= "name",
+        sravn_znach=star_id
+    )
+    list_id = await get_all_if(
+        table="Just_users",
+        column_poiska="unic_kod_strtsi",
+        column_pol= "unic_kod",
+        sravn_znach=star_id
+    )
+    for i in range (len(list_students)):
+        await message.answer (f"Ссылка для:\n{list_students[i]}\nhttps://t.me/{username_bota}?start={list_id[i]}")
 
 
 async def edit_students_0 (message: types.Message, state: FSMContext):
@@ -378,12 +401,40 @@ async def my_students_1(message: types.Message, state: FSMContext):
         condition_column="name", 
         condition_value=name
     )
-
-        
+    unic_code = await get_specific_value(
+        table = "Just_users", column="unic_kod", 
+        condition_column="name", 
+        condition_value=name
+    )
+    edit_btn = InlineKeyboardButton(
+        text = "Очистить tg_id",
+        callback_data=f'clear_tg_id;{unic_code}'
+    )
+    cur_markup = InlineKeyboardMarkup(inline_keyboard=[[edit_btn]])
     await state.clear()
-    await message.answer(f"У {name} {count_b} баллов. Вот его история:{coment}",reply_markup=markup_menu)
-    
+    await message.answer(f"У {name} {count_b} баллов. Вот его история:{coment}")
+    await message.answer("Вот его пригласительная ссылка", reply_markup=cur_markup )
+    await message.answer(f"https://t.me/{username_bota}?start={unic_code}",reply_markup=markup_menu)
 
+async def clearer_tg_id (callback_query: CallbackQuery):
+    data = callback_query.data.split(';')
+    unic_code = int(data[1].strip())
+    await setter_for_bd(
+        table= "Just_users",
+        column="tg_user_id",
+        column_usl="unic_kod",
+        value_for_set=0,
+        value_usl= unic_code 
+    )
+    name = await get_specific_value(
+        table = "Just_users", column="name", 
+        condition_column="unic_kod", 
+        condition_value=unic_code
+    )
+    await callback_query.message.edit_text(
+        text = f"tg_id для {name} был успешно удален",
+        reply_markup = None
+    )
 
 #_____________ Добавление студента ___________________
 

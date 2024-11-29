@@ -5,6 +5,7 @@ from Db import get_all
 # Изменения баллов и коментариев
 async def setter_bals_coms(name, comment, all_count):
     # Вставка коментариев
+    print("\n Произошло переписывание БД")
     await setter_for_bd(
         table="Just_users",
         column="comment",
@@ -30,13 +31,14 @@ async def creat_user(name_sheet, name, u_code_strsti, comment, all_count):
          condition_column="place",
          condition_value=str(name_sheet)
     )
-    
-    if not( tg_user_id_strst is None):
 
-        url = await full_add_student(
-            full_name= name,
-            unic_code= int(u_code_strsti),                    
-        )                       
+    url = await full_add_student(
+        full_name= name,
+        unic_code= int(u_code_strsti),                    
+    )
+    if not( tg_user_id_strst is None):
+        print("\nuser id Старосты есть в БД")
+                               
         await bot.send_message(tg_user_id_strst, "Этого человека не было в БД")
         await bot.send_message(tg_user_id_strst, url)
     await setter_bals_coms(

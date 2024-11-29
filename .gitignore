@@ -2,6 +2,6 @@
 download/
 __pycache__/
 Rasx/
-bali.db/
+bali.db
 api_for_google_sheet.json
 bali.db-journal

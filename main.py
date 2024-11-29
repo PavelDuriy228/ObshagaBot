@@ -49,6 +49,8 @@ dp.message.register(my_students, lambda message: message.text == "Мои сту�
 dp.message.register(my_students_1,deistv_st.name_st )
 dp.message.register(add_students,lambda message: message.text == "Добавить студента" )
 dp.message.register(proc_create_new_user2, NewUser.text_cell )
+dp.message.register(get_urls, lambda message: message.text == "Получить ссылки для студентов")
+dp.callback_query.register(clearer_tg_id, lambda c: c.data and c.data.startswith("clear_tg_id"))
 #dp.message.register(handl_statistika, lambda message: message.text == "Статистика")                
 #-------- Конец части для старосты -------------------------
 

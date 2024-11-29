@@ -9,6 +9,7 @@ menu_keyboard_for_strst =[
 #    [KeyboardButton(text="Изменить баллы")],
     [KeyboardButton(text="Мои студенты")],
     [KeyboardButton(text="Статистика")],
+    [KeyboardButton(text="Получить ссылки для студентов")]
 #    [KeyboardButton(text="Добавить студентов файлом")],
 #    [KeyboardButton(text="Изменить студентов")]
 ]
